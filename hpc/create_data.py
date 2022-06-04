@@ -3,7 +3,7 @@ import pickle
 
 import requests
 
-from hpc.timeseries import create_time_series
+from timeseries import create_time_series
 
 
 def push_job(assets: str):

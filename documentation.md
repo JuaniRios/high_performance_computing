@@ -6,7 +6,7 @@
 
 2) Apply database migrations to master_data
    1) cd ./master_data
-   2) python manage.py makemigrations
+   2) python manage.py migrate
 
 
 3) Run the auth microservice
