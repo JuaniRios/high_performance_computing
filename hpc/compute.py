@@ -12,8 +12,9 @@ comm = MPI.COMM_WORLD
 if comm.rank == 0:
     token = requests.get("http://127.0.0.1:8000/token", data={"username": "admin", "password": "1234"})
     token = token.json()
-
+    print("waiting for next job")
     new_job = requests.get("http://localhost:7500/queues/jobs", headers={"Authorization": f"Bearer {token}"})
+    print("new job received, computing...")
     assert new_job.status_code == 200
     new_job = new_job.json()
     new_job = new_job["response"]
@@ -46,8 +47,6 @@ for series in series_list:
     model = linear_fit(series)
     calc = predict_value(model, len(series) + 1)  # predict at T+1 where T is length of time series data. I created all 100 time series with 300 points
     calcs.append(calc)
-
-print(calcs)
 
 result = comm.gather(calcs, root=0)
 
